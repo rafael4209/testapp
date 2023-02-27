@@ -1,0 +1,68 @@
+<input
+  (click)="onClear()"
+  style="display: block" type="button" value="Clear db">
+<h1 id="tableLabel">Questionnaire</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+
+<div *ngIf="data$ | async as data">
+  <ng-container *ngFor="let question of data">
+    {{question | json}}
+    <h4>Q #{{question.questionId}}:</h4>
+
+    <h4>{{question.questionText}}?</h4>
+    <ng-container *ngIf="question.answerValue">
+      <h4>Your Answer is: {{question.answerValue}}</h4>
+    </ng-container>
+
+    <ng-container *ngIf="question.answerValue == null">
+
+      <ng-container *ngIf="question.answerType === 0">
+        <input type="text">
+      </ng-container>
+
+      <ng-container *ngIf="question.answerType === 1">
+        <input type="number">
+      </ng-container>
+
+      <ng-container *ngIf="question.answerType === 2">
+        <select name="multiple" id="select">
+          <option *ngFor="let option of selectOptions" value="{{option}}">{{option}}</option>
+        </select>
+      </ng-container>
+
+      <input
+        [disabled]="question.answerValue != null"
+        (click)="onAnswer(question)"
+        style="display: block" type="button" value="Answer">
+
+    </ng-container>
+
+
+    <br>
+
+    <br>
+    <br>
+
+  </ng-container>
+</div>
+
+<!--<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">-->
+<!--  <thead>-->
+<!--    <tr>-->
+<!--      <th>Date</th>-->
+<!--      <th>Temp. (C)</th>-->
+<!--      <th>Temp. (F)</th>-->
+<!--      <th>Summary</th>-->
+<!--    </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--    <tr *ngFor="let forecast of forecasts">-->
+<!--      <td>{{ forecast.date }}</td>-->
+<!--      <td>{{ forecast.temperatureC }}</td>-->
+<!--      <td>{{ forecast.temperatureF }}</td>-->
+<!--      <td>{{ forecast.summary }}</td>-->
+<!--    </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
